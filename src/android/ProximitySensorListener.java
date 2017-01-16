@@ -134,9 +134,12 @@ public class ProximitySensorListener extends CordovaPlugin implements SensorEven
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("start")) {
             this.start();
-        }
-        else if (action.equals("stop")) {
+        } else if (action.equals("stop")) {
             this.stop();
+		} else if (action.equals("getProximityState")) {
+            // If not running, then this is an async call, so don't worry about waiting
+            this.start();
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, getProximity() == ProximitySensorListener.NEAR));		
         } else {
             // Unsupported action
             return false;
@@ -224,7 +227,7 @@ public class ProximitySensorListener extends CordovaPlugin implements SensorEven
 
         int proximity; 
         
-        if (event.values[0] == 0) {
+        if (event.values[0] < event.sensor.getMaximumRange()) {
             proximity = ProximitySensorListener.NEAR;
             
             if (this.partialWakeLock != null && !this.partialWakeLock.isHeld()) {
