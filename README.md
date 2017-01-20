@@ -23,7 +23,7 @@ This plugin provides access to the device's (IR) proximity sensor. This sensor i
 
 ## Installation
 
-    cordova plugin add https://github.com/awoken-well/cordova-plugin-proximity.git
+    cordova plugin add https://github.com/jaraxasoftware/cordova-plugin-proximity.git
 
 ## Supported Platforms
 
